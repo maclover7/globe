@@ -11,26 +11,26 @@ class DashboardController < ApplicationController
       @student_assignments = current_student.student_assignments.where(completed: false).joins(:assignment).where("assignments.due_date <= ?", Date.today).all
     elsif params[:time] == "today"
       @page_heading = "Today's Assignments:"
-      @student_assignments = StudentAssignment.joins(:assignment).where("DATE(assignments.due_date) = ?", Date.today).all
+      @student_assignments = current_student.student_assignments.where(completed: false).joins(:assignment).where("DATE(assignments.due_date) = ?", Date.today).all
     elsif params[:time] == "tomorrow"
       @page_heading = "Tomorrow's Assignments:"
-      @student_assignments = StudentAssignment.joins(:assignment).where("DATE(assignments.due_date) = ?", Date.tomorrow).all
+      @student_assignments = current_student.student_assignments.where(completed: false).joins(:assignment).where("DATE(assignments.due_date) = ?", Date.tomorrow).all
     elsif params[:time] == "week"
       @page_heading = "This Week's Assignments:"
-      @student_assignments = StudentAssignment.joins(:assignment).where("DATE(assignments.due_date) BETWEEN ? AND ?", Date.today.beginning_of_week, Date.today.end_of_week).all
+      @student_assignments = current_student.student_assignments.where(completed: false).joins(:assignment).where("DATE(assignments.due_date) BETWEEN ? AND ?", Date.today.beginning_of_week, Date.today.end_of_week).all
     elsif params[:time] == "next_2_weeks"
       @page_heading = "Next 2 Week's Assignments"
-      @student_assignments = StudentAssignment.joins(:assignment).where("DATE(assignments.due_date) BETWEEN ? AND ?", Date.today.beginning_of_week, Date.today.end_of_week + 7.days).all
+      @student_assignments = current_student.student_assignments.where(completed: false).joins(:assignment).where("DATE(assignments.due_date) BETWEEN ? AND ?", Date.today.beginning_of_week, Date.today.end_of_week + 7.days).all
     elsif params[:time] == "all"
       @page_heading = "All Assignments:"
-      @student_assignments = StudentAssignment.where(student_id: current_student.id, completed: false).all
+      @student_assignments = current_student.student_assignments.where(completed: false).all
     end
 
     ## Per Course:
     if params[:course_id]
       if @course = current_student.courses.find_by_id(params[:course_id])
         @page_heading = "#{@course.name} Assignments:"
-        @student_assignments = StudentAssignment.where(completed: false).joins(:assignment).where("assignments.course_id = ?", @course.id).all && StudentAssignment.where(completed: nil).joins(:assignment).where("assignments.course_id = ?", @course.id).all
+        @student_assignments = current_student.student_assignments.where(completed: false).all
       else
         redirect_to student_root_path, notice: "Not authorized to view assignments for this course" if @course.nil?
       end

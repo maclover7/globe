@@ -5,6 +5,8 @@
 
 <% if teacher_signed_in? %>
   <h1 class='center'> <%= link_to 'My Courses', courses_path %> </h1>
+<% elsif student_signed_in? %>
+    <h1 class='center'> <%= link_to 'Dashboard', student_dashboard_path %> </h1>
 <% else %>
   <h1 class='center'> <%= link_to 'Register or Sign In', auth_path %> </h1>
 <% end %>
