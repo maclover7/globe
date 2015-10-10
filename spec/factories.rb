@@ -21,6 +21,11 @@ FactoryGirl.define do
   factory :teacher, traits: [:user]
   factory :user, traits: [:user]
 
+  factory :student_assignment do
+    assignment_id 1
+    student_id 1
+  end
+
   trait :user do
     email { Faker::Internet.email }
     name { Faker::Name.name }
