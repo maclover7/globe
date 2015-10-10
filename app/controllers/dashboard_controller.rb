@@ -30,7 +30,7 @@ class DashboardController < ApplicationController
     if params[:course_id]
       if @course = current_student.courses.find_by_id(params[:course_id])
         @page_heading = "#{@course.name} Assignments:"
-        @student_assignments = current_student.student_assignments.where(completed: false).all
+        @student_assignments = StudentAssignment.where(completed: false, student_id: current_student.id).joins(:assignment).where("assignments.course_id = ?", @course.id).all
       else
         redirect_to student_root_path, notice: "Not authorized to view assignments for this course" if @course.nil?
       end
