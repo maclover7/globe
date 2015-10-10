@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :assignment do
+    course_id 1
+    description { Faker::Lorem.paragraph }
+    name { Faker::Name.name }
+  end
+
   factory :course do
     description { Faker::Lorem.paragraph }
     name { Faker::Name.name }
