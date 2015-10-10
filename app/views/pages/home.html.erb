@@ -3,4 +3,8 @@
 
 <hr>
 
-<h1 class='center'> <%= link_to 'Register or Sign In', auth_path %> </h1>
+<% if teacher_signed_in? %>
+  <h1 class='center'> <%= link_to 'My Courses', courses_path %> </h1>
+<% else %>
+  <h1 class='center'> <%= link_to 'Register or Sign In', auth_path %> </h1>
+<% end %>
