@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   devise_for :students, :teachers, controllers: { registrations: "registrations" }, skip: :sessions
 
   ## FRONTEND API
-  post '/enrollments' => 'enrollments#create'
+  post '/courses/:course_id/assignments' => 'assignments#create', as: 'assignments'
+  post '/enrollments' => 'enrollments#create', as: 'enrollments'
 end
