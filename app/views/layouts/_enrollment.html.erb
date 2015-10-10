@@ -1,0 +1,25 @@
+<div class="modal fade" id="newEnrollment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Enrollment</h4>
+      </div>
+      <div class="modal-body">
+
+        <%= form_tag enrollments_path, id: "new-enrollment-form" do %>
+          <div class="form-group">
+          <%= label_tag "code", "Please enter the code of the course you want to enroll in." %>
+          <%= text_field_tag "enrollment[code]", nil, placeholder: "abc123", class: "form-control new-enrollment-code" %>
+          </div>
+          <p>Not sure where to find this? Speak to the teacher whose class you want to enroll in.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= button_tag "Submit", type:"submit", class: "btn btn-primary new-enrollment-btn popup-submit" %>
+      </div>
+        <% end %>
+
+    </div>
+  </div>
+</div>
