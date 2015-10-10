@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :courses
   root to: 'pages#home'
   get 'auth' => 'pages#auth'
 

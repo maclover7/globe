@@ -1,0 +1,11 @@
+<div class="page-header center">
+  <h1><%= @course.name %></h1>
+</div>
+
+<p>
+  <strong>Course Description:</strong>
+  <%= @course.description %>
+</p>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

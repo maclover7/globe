@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   %w(Student Teacher).each do |k|
     define_method "current_#{ k.underscore }" do
       current_user if current_user.is_a?(k.constantize)
