@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :course do
-    description "MyText"
-    name "MyString"
+    description { Faker::Lorem.paragraph }
+    name { Faker::Name.name }
     teacher_id 1
   end
 
