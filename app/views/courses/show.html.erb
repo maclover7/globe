@@ -2,10 +2,32 @@
   <h1><%= @course.name %> <small> <%= @course.code %> </small></h1>
 </div>
 
-<p>
-  <strong>Course Description:</strong>
-  <%= @course.description %>
-</p>
+<div class="row">
+  <div class="col-md-6">
+    <p>
+      <strong>Course Description:</strong>
+      <%= @course.description %>
+    </p>
 
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+    <hr>
+
+    <p><b><%= @course.students.count %> Enrolled Students:</b></p>
+    <% if @course.students.any? %>
+      <ul>
+        <% @course.students.each do |student| %>
+          <li> <%= student.name %> </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No students currently enrolled in this course.</p>
+    <% end %>
+
+    <hr>
+
+    <%= link_to 'Edit', edit_course_path(@course) %> |
+    <%= link_to 'Back', courses_path %>
+  </div>
+
+  <div class="col-md-6">
+  </div>
+</div>

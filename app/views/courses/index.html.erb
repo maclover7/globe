@@ -10,6 +10,9 @@
           <h3> <%= course.name %> </h3>
           <p><b>Code:</b> <%= course.code %> </p>
           <p><b>Description:</b> <%= course.description %> </p>
+          <% if course.students.any? %>
+            <p><b>Students Enrolled:</b> <%= course.students.count %></p>
+          <% end %>
           <p>
           <%= link_to 'Show', course , class: 'btn btn-primary', role: 'button' %>
             <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-default', role: 'button' %>
