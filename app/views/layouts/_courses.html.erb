@@ -1,0 +1,22 @@
+<% if current_user.courses.where("courses.name IS NOT NULL").any? %>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Courses <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <% current_user.courses.where("courses.name IS NOT NULL").each do |course| %>
+        <li> <%= link_to course.name, course_path(course) %> </li>
+      <% end %>
+
+      <% if current_user.is_a?(Teacher) %>
+        <li>
+          <%= link_to new_course_path do %>
+            <span class="glyphicon glyphicon-plus"></span> New Course
+          <% end %>
+        </li>
+      <% else # Student %>
+        <li>
+          <span class="glyphicon glyphicon-plus"></span> New Enrollment
+        </li>
+      <% end %>
+    </ul>
+  </li>
+<% end %>
