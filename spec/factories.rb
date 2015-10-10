@@ -5,6 +5,11 @@ FactoryGirl.define do
     teacher_id 1
   end
 
+  factory :enrollment do
+    course_id 1
+    student_id 1
+  end
+
   factory :student, traits: [:user]
   factory :teacher, traits: [:user]
   factory :user, traits: [:user]

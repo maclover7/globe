@@ -1,7 +1,9 @@
 class Course < ActiveRecord::Base
-  before_save :generate_course_code
-
+  has_many :enrollments, dependent: :destroy
+  has_many :students, through: :enrollments
   belongs_to :teacher
+  ###
+  before_save :generate_course_code
   validates_presence_of :name
 
   private
