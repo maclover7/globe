@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20151010205326) do
   create_table "student_assignments", force: :cascade do |t|
     t.integer  "assignment_id"
     t.integer  "student_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.boolean  "completed"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "completed",     default: false
   end
 
   create_table "users", force: :cascade do |t|
