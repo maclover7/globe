@@ -8,8 +8,8 @@
       <div class="thumbnail">
         <div class="caption">
           <h3> <%= course.name %> </h3>
-          <p> <%= course.code %> </p>
-          <p> <%= course.description %> </p>
+          <p><b>Code:</b> <%= course.code %> </p>
+          <p><b>Description:</b> <%= course.description %> </p>
           <p>
           <%= link_to 'Show', course , class: 'btn btn-primary', role: 'button' %>
             <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-default', role: 'button' %>

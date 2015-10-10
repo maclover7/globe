@@ -2,6 +2,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_teacher!
   before_action :set_course, only: [:show, :edit, :update, :destroy]
   before_action :correct_teacher, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: :show
 
   # GET /courses
   # GET /courses.json
@@ -51,6 +52,11 @@ class CoursesController < ApplicationController
   private
     def correct_teacher
       @course = current_teacher.courses.find_by(id: params[:id])
+      redirect_to root_path, 'You do not have permission to view/edit this course' if @course.nil?
+    end
+
+    def correct_user
+      @course = current_user.courses.find_by(id: params[:id])
       redirect_to root_path, 'You do not have permission to view/edit this course' if @course.nil?
     end
 
