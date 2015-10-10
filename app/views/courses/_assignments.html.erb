@@ -23,7 +23,11 @@
           <%= assignment.name %>
         </td>
         <td><%= assignment.due_date.strftime("%A, %B %d") %></td>
-        <td>EDIT</td>
+        <td>
+          <%= link_to edit_assignment_path(assignment), class: "btn btn-default btn-sm" do %>
+            <span class='glyphicon glyphicon-pencil'></span> Edit Assignment
+          <% end %>
+        </td>
         <td>
           <%= button_to "Delete", {
             controller: :assignments,

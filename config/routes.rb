@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'auth' => 'pages#auth'
 
   resources :courses
+  get '/assignments/:assignment_id/edit' => 'assignments#edit', as: 'edit_assignment'
+  put '/assignments/:assignment_id/edit' => 'assignments#update', as: 'update_assignment'
 
   devise_for :users, skip: :registrations
   devise_for :students, :teachers, controllers: { registrations: "registrations" }, skip: :sessions
