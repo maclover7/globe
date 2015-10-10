@@ -13,6 +13,7 @@ class AssignmentsController < ApplicationController
                                     description: params['assignment']['description'],
                                     due_date: due_date,
                                     name: params['assignment']['name'])
+    AssignmentCreatorWorker.perform_async(@assignment.id)
     render json: {}, status: 200
   end
 
