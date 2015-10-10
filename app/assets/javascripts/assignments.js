@@ -27,6 +27,7 @@ function hideButton() {
 function clearInput() {
   $('.new-assignment-name').val("");
   $('.new-assignment-description').val("");
+  $('.new-assignment-duedate').val("");
 }
 
 function sendAssignment() {
