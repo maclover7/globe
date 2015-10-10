@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :students, through: :enrollments
   belongs_to :teacher
