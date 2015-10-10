@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 # Rails Dependencies
 gem 'rails', '4.2.4'
-gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -16,6 +15,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'sidekiq'
+gem 'puma'
 
 # Environment Dependencies
 group :development, :test do
@@ -24,6 +24,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'coveralls', require: false
   gem 'pry'
+  gem 'sqlite3'
 end
 
 group :test do
@@ -31,4 +32,8 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'shoulda'
+end
+
+group :production do
+  gem 'pg'
 end
