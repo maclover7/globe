@@ -11,7 +11,7 @@ describe AssignmentCreatorWorker do
       @assignment = FactoryGirl.create(:assignment)
     end
 
-    it "creates an instance of Slack::Notifier and pings" do
+    it "creates a StudentAssignment" do
       expect {
         AssignmentCreatorWorker.perform_async(@assignment.id) && AssignmentCreatorWorker.drain
       }.to change(StudentAssignment, :count).by(1)
