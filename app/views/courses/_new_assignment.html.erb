@@ -25,6 +25,16 @@
             <%= label_tag "due_date", "Due Date" %>
             <input type="text" data-provide='datepicker' name="assignment[due_date]" class="form-control new-assignment-duedate">
           </div>
+
+          <div class="form-group">
+            <label for="assignment_category">Category</label><br>
+            <select name="assignment[category]" id="assignment_category" class="form-control new-assignment-category">
+              <option selected="selected" value="Homework">Homework</option>
+              <option selected="selected" value="Quiz">Quiz</option>
+              <option selected="selected" value="Test">Test</option>
+              <option selected="selected" value="Project">Project</option>
+            </select>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

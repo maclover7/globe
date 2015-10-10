@@ -9,5 +9,6 @@ Rails.application.routes.draw do
 
   ## FRONTEND API
   post '/courses/:course_id/assignments' => 'assignments#create', as: 'assignments'
+  delete '/courses/:course_id/assignment/:assignment_id' => 'assignments#destroy', as: 'assignment'
   post '/enrollments' => 'enrollments#create', as: 'enrollments'
 end

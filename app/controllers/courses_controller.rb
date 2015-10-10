@@ -13,6 +13,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1
   def show
+    @assignments = @course.assignments.where("DATE(assignments.due_date) >= ?", Date.today).all
   end
 
   # GET /courses/new

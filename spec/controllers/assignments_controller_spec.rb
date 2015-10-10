@@ -20,5 +20,24 @@ RSpec.describe AssignmentsController, type: :controller do
       end
     end
   end
-end
 
+  describe "DELETE #destroy" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    before { sign_in(teacher) }
+
+    it "destroys the requested assignment" do
+      course = FactoryGirl.create(:course)
+      assignment = FactoryGirl.create(:assignment)
+      expect {
+        delete :destroy, assignment_id: assignment.id, course_id: course.id
+      }.to change(Assignment, :count).by(-1)
+    end
+
+    it "redirects to the courses list" do
+      course = FactoryGirl.create(:course)
+      assignment = FactoryGirl.create(:assignment)
+      delete :destroy, assignment_id: assignment.id, course_id: course.id
+      expect(response).to redirect_to(course)
+    end
+  end
+end
