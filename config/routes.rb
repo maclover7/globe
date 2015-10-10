@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   delete '/courses/:course_id/assignment/:assignment_id' => 'assignments#destroy', as: 'assignment'
   post '/enrollments' => 'enrollments#create', as: 'enrollments'
   patch "/student_assignments/:id/complete" => "student_assignments#complete", as: :complete_student_assignment
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end

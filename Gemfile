@@ -18,6 +18,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'sidekiq'
 gem 'puma'
+gem 'sinatra'
 
 # Environment Dependencies
 group :development, :test do
