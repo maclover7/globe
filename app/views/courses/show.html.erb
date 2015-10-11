@@ -24,7 +24,9 @@
 
     <hr>
 
-    <%= link_to 'Edit', edit_course_path(@course) %> |
+    <% if current_teacher && @course.teacher == current_teacher %>
+      <%= link_to 'Edit', edit_course_path(@course) %> |
+    <% end %>
     <%= link_to 'Back', courses_path %>
   </div>
 
@@ -32,6 +34,8 @@
     <p>Upcoming Assignments:</p>
     <%= render "courses/assignments" %>
 
-    <%= render 'courses/new_assignment' %>
+    <% if current_teacher && @course.teacher == current_teacher %>
+      <%= render 'courses/new_assignment' %>
+    <% end %>
   </div>
 </div>
