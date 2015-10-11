@@ -14,9 +14,11 @@
             <p><b>Students Enrolled:</b> <%= course.students.count %></p>
           <% end %>
           <p>
-          <%= link_to 'Show', course , class: 'btn btn-primary', role: 'button' %>
+            <%= link_to 'Show', course , class: 'btn btn-primary', role: 'button' %>
             <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-default', role: 'button' %>
-            <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+            <button class="btn btn-default" data-course-id="<%= course.id %>" id="delete-course">
+              Destroy
+            </button>
           </p>
         </div>
       </div>

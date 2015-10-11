@@ -47,8 +47,11 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1
   def destroy
-    @course.destroy
-    redirect_to courses_url, notice: 'Course was successfully destroyed.'
+    if @course.destroy
+      render json: {}, status: 200
+    else
+      render json: {}, status: 500
+    end
   end
 
   private

@@ -30,14 +30,9 @@
             <% end %>
           </td>
           <td>
-            <%= button_to "Delete", {
-              controller: :assignments,
-              action: 'destroy',
-              assignment_id: assignment.id,
-              course_id: @course.id },
-              method: :delete,
-              class: 'btn btn-sm btn-default',
-              data: { confirm: 'Are you sure?' } %>
+            <button class="btn btn-sm btn-default" data-assignment-id="<%= assignment.id %>" id="delete-assignment">
+              Delete
+            </button>
           </td>
       <% end %>
       </tr>

@@ -1,9 +1,10 @@
-$(document).ready(function() {
+var enrollmentCreateListener;
+enrollmentCreateListener = function() {
   $('.new-enrollment-btn').click(function(e) {
     e.preventDefault();
 
     if (!$('.new-enrollment-code').val()) {
-      alert("Course code field can't be blank");
+      swal({ title: "Course code field can't be blank", type: "warning" });
     } else {
       $('.new-enrollment-btn').prop('disabled', true);
       sendEnrollment();
@@ -13,16 +14,7 @@ $(document).ready(function() {
   $('.new-enrollment-close').click(function() {
     clearInput();
   })
-});
-
-function hideButton() {
-  var button = $("#new-enrollment-toggler");
-  button.hide();
-}
-
-function clearInput() {
-  $('.new-enrollment-code').val("");
-}
+};
 
 function sendEnrollment() {
   $.ajax({
@@ -35,12 +27,26 @@ function sendEnrollment() {
       hideButton();
       clearInput();
       $('.new-enrollment-btn').prop('disabled', false);
-      alert("Course added successfully.");
+      swal("Course added successfully.", "", "success");
       window.location.reload();
     },
     error: function() {
-      alert("Error, please try again. It is possible that you may already be registered for this course.");
+      swal("Error, please try again.", "It is possible that you may already be registered for this course.", "error");
       $('.new-enrollment-btn').prop('disabled', false);
     }
   })
+}
+
+$(document).ready(enrollmentCreateListener);
+$(document).on("page:load", enrollmentCreateListener);
+
+// CREATE HELPER FUNCTIONS
+
+function hideButton() {
+  var button = $("#new-enrollment-toggler");
+  button.hide();
+}
+
+function clearInput() {
+  $('.new-enrollment-code').val("");
 }

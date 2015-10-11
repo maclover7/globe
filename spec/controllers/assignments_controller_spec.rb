@@ -33,11 +33,11 @@ RSpec.describe AssignmentsController, type: :controller do
       }.to change(Assignment, :count).by(-1)
     end
 
-    it "redirects to the courses list" do
+    it "returns http 200" do
       course = FactoryGirl.create(:course)
       assignment = FactoryGirl.create(:assignment)
       delete :destroy, assignment_id: assignment.id, course_id: course.id
-      expect(response).to redirect_to(course)
+      expect(response.status).to eq(200)
     end
   end
 end

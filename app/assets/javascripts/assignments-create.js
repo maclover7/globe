@@ -1,12 +1,13 @@
-$(document).ready(function() {
+var assignmentCreateListener;
+assignmentCreateListener = function() {
   $('.new-assignment-btn').click(function(e) {
     e.preventDefault();
 
     if (!$('.new-assignment-name').val()) {
-      alert("Name field can't be blank");
+      swal({ title: "Name field can't be blank", type: "warning" });
     } else {
       if (!$('.new-assignment-description').val()) {
-        alert("Description field can't be blank");
+        swal({ title: "Description field can't be blank", type: "warning" });
       } else {
         $('.new-assignment-btn').prop('disabled', true);
         sendAssignment();
@@ -17,18 +18,7 @@ $(document).ready(function() {
   $('.new-assignment-close').click(function() {
     clearInput();
   })
-});
-
-function hideButton() {
-  var button = $("#new-assignment-toggler");
-  button.hide();
-}
-
-function clearInput() {
-  $('.new-assignment-name').val("");
-  $('.new-assignment-description').val("");
-  $('.new-assignment-duedate').val("");
-}
+};
 
 function sendAssignment() {
   $.ajax({
@@ -41,11 +31,27 @@ function sendAssignment() {
       hideButton();
       clearInput();
       $('.new-assignment-btn').prop('disabled', false);
-      alert("Assignment added successfully.");
+      swal("Assignment added successfully.", "", "success");
       window.location.reload();
     },
     error: function(jqXHR, textStatus, errorThrown) { dispatchError(jqXHR.status) }
   })
+}
+
+$(document).ready(courseDeleteListener);
+$(document).on("page:load", courseDeleteListener);
+
+// CREATE HELPER FUNCTIONS
+
+function hideButton() {
+  var button = $("#new-assignment-toggler");
+  button.hide();
+}
+
+function clearInput() {
+  $('.new-assignment-name').val("");
+  $('.new-assignment-description').val("");
+  $('.new-assignment-duedate').val("");
 }
 
 // ERROR HANDLING
@@ -61,22 +67,22 @@ function dispatchError(status) {
 }
 
 function handleAlgorithmCode2() {
-  alert("Hello! This is an alert from the Robots here at Globe. We are just letting you know " +
+  swal("Hello! This is an alert from the Robots here at Globe.", "We are just letting you know " +
         "that more than half of your students have at least **2** projects, quizzes, or tests " +
         "due on " + $('.new-assignment-duedate').val() + "." +
-        " Please consider moving this assignment's due date if at all possible.");
+        " Please consider moving this assignment's due date if at all possible.", "warning");
   $('.new-assignment-btn').prop('disabled', false);
 }
 
 function handleAlgorithmCode3() {
-  alert("Hello! This is an alert from the Robots here at Globe. We are just letting you know " +
+  swal("Hello! This is an alert from the Robots here at Globe.", "We are just letting you know " +
         "that more than half of your students have at least **3** projects, quizzes, or tests " +
         "due on " + $('.new-assignment-duedate').val() + "." +
-        " Please move this assignment's due date to a different day.");
+        " Please move this assignment's due date to a different day.", "error");
   $('.new-assignment-btn').prop('disabled', false);
 }
 
 function handleOtherError() {
-  alert("Error, please try again.");
+  swal("Error, please try again.", "", "error");
   $('.new-assignment-btn').prop('disabled', false);
 }

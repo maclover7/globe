@@ -132,10 +132,10 @@ RSpec.describe CoursesController, type: :controller do
       }.to change(Course, :count).by(-1)
     end
 
-    it "redirects to the courses list" do
+    it "returns http 200" do
       course = FactoryGirl.create(:course)
       delete :destroy, id: course.id
-      expect(response).to redirect_to(courses_url)
+      expect(response.status).to eq(200)
     end
   end
 end

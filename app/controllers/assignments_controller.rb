@@ -51,8 +51,11 @@ class AssignmentsController < ApplicationController
 
   def destroy
     @assignment = Assignment.find_by(id: params[:assignment_id])
-    @assignment.destroy
-    redirect_to course_path(@course)
+    if @assignment.destroy
+      render json: {}, status: 200
+    else
+      render json: {}, status: 500
+    end
   end
 
   private
