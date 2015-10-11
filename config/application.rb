@@ -34,6 +34,5 @@ module Globe
 
     # Autoload these directories:
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '**/')]
-    #config.autoload_paths += Dir[Rails.root.join('app', 'workers', '**/')]
   end
 end

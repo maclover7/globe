@@ -20,6 +20,11 @@ gem 'sidekiq'
 gem 'puma'
 gem 'sinatra'
 
+# Rails Assets Dependencies
+source 'https://rails-assets.org' do
+  gem 'rails-assets-sweetalert'
+end
+
 # Environment Dependencies
 group :development, :test do
   gem 'byebug'
