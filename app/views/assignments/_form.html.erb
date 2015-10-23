@@ -22,9 +22,11 @@
   </div>
 
   <div class="form-group">
-    <%= f.label "due_date", "Due Date" %>
+    <%= f.label :due_date, "Due Date" %>
     <input type="text" data-provide='datepicker' name="assignment[due_date]" value="<%= @assignment.due_date.strftime("%m/%d/%Y") %>" class="form-control edit-assignment-duedate">
   </div>
+
+  <%= render 'assignments/category_select', category: @assignment.category %>
 
   <div class="form-group">
     <%= f.submit 'Save', class: "btn btn-primary" %>

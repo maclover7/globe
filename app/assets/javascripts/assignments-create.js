@@ -38,8 +38,8 @@ function sendAssignment() {
   })
 }
 
-$(document).ready(courseDeleteListener);
-$(document).on("page:load", courseDeleteListener);
+$(document).ready(assignmentCreateListener);
+$(document).on("page:load", assignmentCreateListener);
 
 // CREATE HELPER FUNCTIONS
 

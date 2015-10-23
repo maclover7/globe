@@ -21,6 +21,35 @@ RSpec.describe AssignmentsController, type: :controller do
     end
   end
 
+  describe "PUT #update" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    before { sign_in(teacher) }
+    before { FactoryGirl.create(:course) }
+
+    context "with valid params" do
+      it "updates the requested assignment" do
+        assignment = FactoryGirl.create(:assignment)
+        put :update, assignment_id: assignment.id, assignment: FactoryGirl.attributes_for(:assignment, category: "Quiz")
+        assignment.reload
+        expect(assignment.category).to eq("Quiz")
+      end
+
+      it "redirects to the assignment's course" do
+        assignment = FactoryGirl.create(:assignment)
+        put :update, assignment_id: assignment.id, assignment: FactoryGirl.attributes_for(:assignment, category: "Quiz")
+        expect(response).to redirect_to(assignment.course)
+      end
+    end
+
+    context "with invalid params" do
+      it "re-renders the 'edit' template" do
+        assignment = FactoryGirl.create(:assignment)
+        put :update, assignment_id: assignment.id, assignment: FactoryGirl.attributes_for(:assignment, name: nil)
+        expect(response).to render_template("edit")
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     let(:teacher) { FactoryGirl.create(:teacher) }
     before { sign_in(teacher) }

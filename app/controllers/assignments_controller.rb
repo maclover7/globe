@@ -41,12 +41,11 @@ class AssignmentsController < ApplicationController
 
   def update
     due_date = Time.parse(assignment_params['due_date'] + "12:00:00 AM")
-    @assignment.update!(#category: assignment_params['category'],
-                          description: assignment_params['description'],
-                          due_date: due_date,
-                          name: assignment_params['name'])
-    @assignment.save!
-    redirect_to course_path(@assignment.course), notice: 'Assignment saved.'
+    if @assignment.update(assignment_params.merge(due_date: due_date))
+      redirect_to @assignment.course, notice: 'Assignment saved.'
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -61,7 +60,7 @@ class AssignmentsController < ApplicationController
   private
 
   def assignment_params
-    params.require(:assignment).permit(:description, :due_date, :name)
+    params.require(:assignment).permit(:category, :description, :due_date, :name)
   end
 
   def correct_teacher_course

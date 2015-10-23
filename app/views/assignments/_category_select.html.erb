@@ -1,0 +1,12 @@
+<% @categories = ['Homework', 'Project', 'Quiz', 'Test'] %>
+<% @categories.delete(category) %>
+
+<div class="form-group">
+  <label for="assignment_category">Category</label><br>
+  <select name="assignment[category]" id="assignment_category" class="form-control edit-assignment-category">
+    <option selected="selected" value="<%= category %>"><%= category %></option>
+    <% @categories.each do |category| %>
+      <option value="<%= category %>"><%= category %></option>
+    <% end %>
+  </select>
+</div>
