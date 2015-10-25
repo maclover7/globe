@@ -13,6 +13,8 @@
         <td>
           <% if assignment.category == "Homework" %>
             <span class="label label-default">Homework</span>
+          <% elsif assignment.category == "Interactive Assessment" %>
+            <span class="label label-primary">IA</span>
           <% elsif assignment.category == "Quiz" %>
             <span class="label label-warning">Quiz</span>
           <% elsif assignment.category == "Test" %>

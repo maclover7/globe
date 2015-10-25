@@ -14,7 +14,7 @@ RSpec.describe StudentAssignment, type: :model do
       @student = FactoryGirl.create(:student)
       @enrollment = FactoryGirl.create(:enrollment)
       @assignment = FactoryGirl.create(:assignment)
-      @student_assignment = FactoryGirl.create(:student_assignment)
+      @student_assignment = FactoryGirl.create(:student_assignment, completed: false)
       expect(StudentAssignment.due_for_course(@student, @course.id).reload).to eq([@student_assignment])
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe StudentAssignment, type: :model do
         @course = FactoryGirl.create(:course)
         @student = FactoryGirl.create(:student)
         @enrollment = FactoryGirl.create(:enrollment)
-        @assignment = FactoryGirl.create(:assignment, due_date: Date.today)
+        @assignment = FactoryGirl.create(:assignment, category: "Quiz", due_date: Date.today)
         @student_assignment = FactoryGirl.create(:student_assignment)
         expect(StudentAssignment.due_for_time(@student, 'today').reload).to eq([@student_assignment])
       end
@@ -84,6 +84,46 @@ RSpec.describe StudentAssignment, type: :model do
         @student_assignment = FactoryGirl.create(:student_assignment)
         expect(StudentAssignment.due_for_time(@student, 'all').reload).to eq([@student_assignment])
       end
+    end
+  end
+
+  describe 'no ia scope' do
+    it 'returns the correct student_assignment' do
+      @course = FactoryGirl.create(:course)
+      @student = FactoryGirl.create(:student)
+      @enrollment = FactoryGirl.create(:enrollment)
+      @assignment = FactoryGirl.create(:assignment, category: "Quiz")
+      @student_assignment = FactoryGirl.create(:student_assignment)
+      expect(StudentAssignment.no_ia.reload).to eq([@student_assignment])
+    end
+
+    it 'returns the correct student_assignment' do
+      @course = FactoryGirl.create(:course)
+      @student = FactoryGirl.create(:student)
+      @enrollment = FactoryGirl.create(:enrollment)
+      @assignment = FactoryGirl.create(:assignment, category: "Interactive Assessment")
+      @student_assignment = FactoryGirl.create(:student_assignment)
+      expect(StudentAssignment.no_ia.reload).to eq([])
+    end
+  end
+
+  describe 'uncompleted scope' do
+    it 'returns the correct student_assignment' do
+      @course = FactoryGirl.create(:course)
+      @student = FactoryGirl.create(:student)
+      @enrollment = FactoryGirl.create(:enrollment)
+      @assignment = FactoryGirl.create(:assignment)
+      @student_assignment = FactoryGirl.create(:student_assignment, completed: false)
+      expect(StudentAssignment.uncompleted.reload).to eq([@student_assignment])
+    end
+
+    it 'returns the correct student_assignment' do
+      @course = FactoryGirl.create(:course)
+      @student = FactoryGirl.create(:student)
+      @enrollment = FactoryGirl.create(:enrollment)
+      @assignment = FactoryGirl.create(:assignment)
+      @student_assignment = FactoryGirl.create(:student_assignment, completed: true)
+      expect(StudentAssignment.uncompleted.reload).to eq([])
     end
   end
 end

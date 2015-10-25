@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :assignment do
+    category "Quiz"
     course_id 1
     description { Faker::Lorem.paragraph }
     due_date "10/30/2015"
