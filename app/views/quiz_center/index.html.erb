@@ -12,14 +12,19 @@
             <% if student_signed_in? %>
               <h3> <%= sa.assignment.name %> </h3>
               <p><b> Due Date: <%= sa.assignment.due_date.strftime("%A, %B %d") %> </b></p>
+
+              <p>
+                <%= link_to 'Take', quiz_center_take_path(sa), class: 'btn btn-primary', role: 'button' %>
+              </p>
             <% else %>
               <h3> <%= sa.name %> </h3>
               <p><b> Due Date: <%= sa.due_date.strftime("%A, %B %d") %> </b></p>
+
+              <p>
+                <%= link_to 'Manage', quiz_center_manage_path(sa), class: 'btn btn-primary', role: 'button' %>
+              </p>
             <% end %>
 
-            <p>
-              <!-- <%= link_to 'Open', root_path, class: 'btn btn-primary', role: 'button' %> -->
-            </p>
           </div>
         </div>
       </div>
