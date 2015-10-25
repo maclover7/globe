@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
+  def redirect
+    redirect_to root_path, notice: 'Unauthorized.'
   end
 
   %w(Student Teacher).each do |k|
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     end
 
     define_method "authenticate_#{ k.underscore }!" do
-      |opts={}| send("current_#{ k.underscore }") || not_found
+      |opts={}| send("current_#{ k.underscore }") || redirect
     end
 
     define_method "#{ k.underscore }_signed_in?" do
