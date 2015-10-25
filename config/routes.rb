@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root to: 'pages#home'
   get 'auth' => 'pages#auth'
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
   post '/enrollments' => 'enrollments#create', as: 'enrollments'
   patch "/student_assignments/:id/complete" => "student_assignments#complete", as: :complete_student_assignment
 
-  require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
