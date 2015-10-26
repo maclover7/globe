@@ -84,6 +84,7 @@ RSpec.describe QuizCenterController, type: :controller do
       let(:teacher) { FactoryGirl.create(:teacher) }
       before do
         sign_in(teacher)
+        @course = FactoryGirl.create(:course)
         @assignment = FactoryGirl.create(:assignment)
         @student_assignment = FactoryGirl.create(:student_assignment)
       end

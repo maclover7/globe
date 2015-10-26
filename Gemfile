@@ -16,7 +16,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
 gem 'devise'
+gem 'figaro'
+gem 'font-awesome-rails'
 gem 'puma'
+gem 'pusher'
 gem 'sidekiq'
 gem 'sinatra'
 
