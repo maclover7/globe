@@ -1,0 +1,71 @@
+<%= render "quiz_center/presence_tracker" %>
+
+<style>
+  .online {
+    color: #82cf85;
+	}
+
+	.offline {
+		color: #f57e7d;
+	}
+</style>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Participants (<span class="online-count">0</span> online)</div>
+      <ul class="list-group">
+        <% @students.each do |student| %>
+          <li class="list-group-item">
+            <i class="fa fa-circle-o offline" id="status-light" data-student-id="<%= student.id %>"</i></i>
+             <%= student.name %> | <%= student.email %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function(){
+    // Initial setup
+    var allMembers;
+    allMembers = presenceChannel.members.each(function(member) {
+      add_member(member.id, member.info);
+    });
+
+    // Update status for new member
+    var newMember;
+    newMember = presenceChannel.bind('pusher:member_added', function(member) {
+      add_member(member.id, member.info);
+      update_count(presenceChannel.members.count);
+    });
+
+    // Update status for departing member
+    var removeMember;
+    removeMember = presenceChannel.bind('pusher:member_removed', function(member) {
+      remove_member(member.id, member.info);
+      update_count(presenceChannel.members.count);
+    });
+
+    // Change a member's status from offline to online
+    function add_member(id, info){
+      i = $("i").filter("[data-student-id='" + id + "']");
+      i.removeClass("offline");
+      i.addClass("online");
+    }
+
+    // Change a member's status from online to offline
+    function remove_member(id, info){
+      i = $("i").filter("[data-student-id='" + id + "']");
+      i.removeClass("online");
+      i.addClass("offline");
+    }
+
+    // Change count at the top of the page
+    function update_count(count){
+      real_count = count - 1;
+      $(".online-count").html("<span class='online-count'>" +  real_count + "</span>");
+    }
+  }
+</script>

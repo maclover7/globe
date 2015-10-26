@@ -20,3 +20,6 @@ config.json
 
 # Ignore Bower assets
 /vendor/assets/components
+
+# Ignore application configuration
+/config/application.yml

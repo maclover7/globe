@@ -1,0 +1,36 @@
+<h1 class="center">Welcome to the Quiz Center, <%= current_user.name %>!</h1>
+
+<hr>
+
+<% if @assessments && !@assessments.empty? %>
+  <div class="row">
+    <% @assessments.each do |sa| %>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+
+            <% if student_signed_in? %>
+              <h3> <%= sa.assignment.name %> </h3>
+              <p><b> Due Date: <%= sa.assignment.due_date.strftime("%A, %B %d") %> </b></p>
+
+              <p>
+                <%= link_to 'Take', quiz_center_take_path(sa), class: 'btn btn-primary', role: 'button' %>
+              </p>
+            <% else %>
+              <h3> <%= sa.name %> </h3>
+              <p><b> Due Date: <%= sa.due_date.strftime("%A, %B %d") %> </b></p>
+
+              <p>
+                <%= link_to 'Manage', quiz_center_manage_path(sa), class: 'btn btn-primary', role: 'button' %>
+              </p>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% else %>
+  <p class="center">You currently have no interactive assessments that are assigned to you.</p>
+<% end %>

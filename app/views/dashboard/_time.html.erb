@@ -17,45 +17,26 @@
 
         <tbody>
           <% @student_assignments.each do |sa| %>
-            <% if sa.completed %>
-              <tr>
-                <td> <%= render "dashboard/sa", sa: sa %> </td>
-                <td>
-                  <% if sa.assignment.category == "Homework" %>
-                    <span class="label label-default">Homework</span>
-                  <% elsif sa.assignment.category == "Quiz" %>
-                    <span class="label label-warning">Quiz</span>
-                  <% elsif sa.assignment.category == "Test" %>
-                    <span class="label label-danger">Test</span>
-                  <% elsif sa.assignment.category == "Project" %>
-                    <span class="label label-info">Project</span>
-                  <% end %>
-                  <del> <%= sa.assignment.name %> </del>
-                </td>
-                <td><del> <%= sa.assignment.course.name %> </del></td>
-                <td><del> <%= sa.assignment.due_date.strftime("%A, %B %d") %> </del></td>
-                <td><del> <%= sa.assignment.body %> </del></td>
-              </tr>
-            <% else %>
-              <tr>
-                <td> <%= render "dashboard/sa", sa: sa %> </td>
-                <td>
-                  <% if sa.assignment.category == "Homework" %>
-                    <span class="label label-default">Homework</span>
-                  <% elsif sa.assignment.category == "Quiz" %>
-                    <span class="label label-warning">Quiz</span>
-                  <% elsif sa.assignment.category == "Test" %>
-                    <span class="label label-danger">Test</span>
-                  <% elsif sa.assignment.category == "Project" %>
-                    <span class="label label-info">Project</span>
-                  <% end %>
-                  <%= sa.assignment.name %>
-                </td>
-                <td> <%= sa.assignment.course.name %> </td>
-                <td> <%= sa.assignment.due_date.strftime("%A, %B %d") %> </td>
-                <td> <%= sa.assignment.description %> </td>
-              </tr>
-            <% end %>
+            <tr>
+              <td> <%= render "dashboard/sa", sa: sa %> </td>
+              <td>
+                <% if sa.assignment.category == "Homework" %>
+                  <span class="label label-default">Homework</span>
+                <% elsif sa.assignment.category == "Interactive Assessment" %>
+                  <span class="label label-primary">IA</span>
+                <% elsif sa.assignment.category == "Quiz" %>
+                  <span class="label label-warning">Quiz</span>
+                <% elsif sa.assignment.category == "Test" %>
+                  <span class="label label-danger">Test</span>
+                <% elsif sa.assignment.category == "Project" %>
+                  <span class="label label-info">Project</span>
+                <% end %>
+                <%= sa.assignment.name %>
+              </td>
+              <td> <%= sa.assignment.course.name %> </td>
+              <td> <%= sa.assignment.due_date.strftime("%A, %B %d") %> </td>
+              <td> <%= sa.assignment.description %> </td>
+            </tr>
           <% end %>
         </tbody>
       </table>

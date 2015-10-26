@@ -1,0 +1,5 @@
+# Add configuration values here, as shown below.
+#
+PUSHER_APP_ID: "2954"
+PUSHER_APP_KEY: 7381a978f7dd7f9a1117
+PUSHER_APP_SECRET: abdc3b896a0ffb85d373
