@@ -35,6 +35,17 @@ class QuizCenterController < ApplicationController
     end
   end
 
+  def change_start_status
+    set_assignment
+    if @assignment.started == true
+      @assignment.update!(started: false)
+      render :json => {}, :status => 200
+    else
+      @assignment.update!(started: true)
+      render :json => {}, :status => 200
+    end
+  end
+
   def take
     set_student_assignment
   end
@@ -43,9 +54,15 @@ class QuizCenterController < ApplicationController
 
   def set_assignment
     @assignment = Assignment.find(params[:id])
+    unless @assignment.course.teacher_id == current_teacher.id
+      redirect_to root_path, notice: 'You do not have permission to view/edit this assignment'
+    end
   end
 
   def set_student_assignment
     @assignment = StudentAssignment.find(params[:id])
+    unless current_student.enrollments.where(course_id: @assignment.assignment.course_id).any?
+      redirect_to root_path, notice: 'You do not have permission to view/edit this assignment'
+    end
   end
 end
