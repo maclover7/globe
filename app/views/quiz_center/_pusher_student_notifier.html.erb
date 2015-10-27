@@ -2,11 +2,12 @@
   window.onload = function(){
     var notificationsChannel = pusher.subscribe("assignment-<%= ENV['RAILS_ENV'] || ENV['RACK_ENV'] %>-<%= @assignment.id %>");
     var waitingArea = $("#waiting-area");
-    var workArea = $("#work-area");
+    var workAreaEditor = $("#work-area-editor");
+    var workAreaToolbar = $("#work-area-toolbar");
 
     // start-work event listener
     notificationsChannel.bind('start-work', function(notification){
-      startWork();
+      startWork(true);
     });
 
     // stop-work event listener
@@ -31,19 +32,23 @@
       }, 1000);
     }
 
-    function startWork(){
+    function startWork(countdown){
       waitingArea.hide();
-      startCountdown();
-      workArea.show();
+      if (countdown == true) {
+        startCountdown();
+      }
+      workAreaEditor.show();
+      workAreaToolbar.show();
     }
 
     function stopWork(){
-      workArea.hide();
+      workAreaEditor.hide();
+      workAreaToolbar.hide();
       waitingArea.show();
     }
 
     <% if @assignment.assignment.started? %>
-      startWork();
+      startWork(false);
     <% else %>
       stopWork();
     <% end %>

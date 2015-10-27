@@ -1,10 +1,16 @@
 class QuizCenterController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_student!, only: [:take]
-  before_action :authenticate_teacher!, only: [:manage]
+  # Students
+  before_action :authenticate_student!, only: [:take, :update]
+  before_action :set_student_assignment, only: [:take, :update]
+  before_action :correct_student, only: [:take, :update]
+  # Teachers
+  before_action :authenticate_teacher!, only: [:change_start_status, :manage]
+  before_action :set_assignment, only: [:change_start_status, :manage]
+  before_action :correct_teacher, only: [:change_start_status, :manage]
+
 
   def change_start_status
-    set_assignment
     if @assignment.started == true
       @assignment.update!(started: false)
       # Alert Pusher (and students) to stop work
@@ -17,7 +23,7 @@ class QuizCenterController < ApplicationController
       render :json => {}, :status => 200
     end
   end
-  
+
   def index
     if student_signed_in? # student
       @assessments = current_student.student_assignments.where(completed: false).joins(:assignment).where("assignments.category = ?", "Interactive Assessment" ).all || []
@@ -30,7 +36,6 @@ class QuizCenterController < ApplicationController
   end
 
   def manage
-    set_assignment
     @students = @assignment.course.students.all
   end
 
@@ -51,22 +56,37 @@ class QuizCenterController < ApplicationController
   end
 
   def take
-    set_student_assignment
+  end
+
+  def update
+    if @assignment.update(student_assignment_params)
+      render json: {}, status: 200
+    end
   end
 
   private
 
-  def set_assignment
-    @assignment = Assignment.find(params[:id])
-    unless @assignment.course.teacher_id == current_teacher.id
+  def correct_student
+    if @assignment.student_id != current_student.id
+      redirect_to(root_path, notice: 'You do not have permission to view/edit this assignment') and return
+    end
+  end
+
+  def correct_teacher
+    if @assignment.course.teacher_id != current_teacher.id
       redirect_to root_path, notice: 'You do not have permission to view/edit this assignment'
     end
   end
 
+  def set_assignment
+    @assignment = Assignment.find(params[:id])
+  end
+
   def set_student_assignment
     @assignment = StudentAssignment.find(params[:id])
-    unless current_student.enrollments.where(course_id: @assignment.assignment.course_id).any?
-      redirect_to root_path, notice: 'You do not have permission to view/edit this assignment'
-    end
+  end
+
+  def student_assignment_params
+    params.require(:student_assignment).permit(:response)
   end
 end

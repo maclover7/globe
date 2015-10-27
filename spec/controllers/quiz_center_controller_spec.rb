@@ -183,4 +183,43 @@ RSpec.describe QuizCenterController, type: :controller do
       end
     end
   end
+
+  describe "POST #update" do
+    context "correct student" do
+      let(:student) { FactoryGirl.create(:student) }
+      before do
+        sign_in(student)
+        @course = FactoryGirl.create(:course)
+        @enrollment = FactoryGirl.create(:enrollment)
+        @assignment = FactoryGirl.create(:assignment)
+        @student_assignment = FactoryGirl.create(:student_assignment)
+      end
+
+      it "returns http 200" do
+        post :update, id: @student_assignment.id, student_assignment: FactoryGirl.attributes_for(:student_assignment, response: "response!")
+        expect(response.status).to eq(200)
+      end
+
+      it "returns http body {}" do
+        post :update, id: @student_assignment.id, student_assignment: FactoryGirl.attributes_for(:student_assignment, response: "response!")
+        expect(response.body).to eq("{}")
+      end
+    end
+
+    context "incorrect student" do
+      let(:student) { FactoryGirl.create(:student) }
+      before do
+        sign_in(student)
+        @course = FactoryGirl.create(:course)
+        @enrollment = FactoryGirl.create(:enrollment)
+        @assignment = FactoryGirl.create(:assignment)
+        @student_assignment = FactoryGirl.create(:student_assignment, student_id: 90000)
+      end
+
+      it "redirects to root_path" do
+        post :update, id: @student_assignment.id, student_assignment: FactoryGirl.attributes_for(:student_assignment, response: "response!")
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end

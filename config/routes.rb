@@ -29,5 +29,6 @@ Rails.application.routes.draw do
   get '/quizcenter/manage/:id' => "quiz_center#manage", as: :quiz_center_manage
   post '/quizcenter/manage/:id/start' => "quiz_center#change_start_status"
   get '/quizcenter/take/:id' => "quiz_center#take", as: :quiz_center_take
+  post '/quizcenter/take/:id/response' => 'quiz_center#update', as: :quiz_center_response
   post '/pusher/auth' => "quiz_center#pusher_auth"
 end

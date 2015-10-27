@@ -19,7 +19,7 @@
           <h4 class="modal-title" id="myModalLabel"> <%= @assignment.assignment.name %> </h4>
         </div>
         <div class="modal-body">
-          prompt goes here...
+          <%= sanitize(@assignment.assignment.description) %>
         </div>
       </div>
 
