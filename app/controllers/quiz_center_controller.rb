@@ -3,6 +3,21 @@ class QuizCenterController < ApplicationController
   before_action :authenticate_student!, only: [:take]
   before_action :authenticate_teacher!, only: [:manage]
 
+  def change_start_status
+    set_assignment
+    if @assignment.started == true
+      @assignment.update!(started: false)
+      # Alert Pusher (and students) to stop work
+      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'stop-work', {})
+      render :json => {}, :status => 200
+    else
+      @assignment.update!(started: true)
+      # Alert Pusher (and students) to start work
+      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'start-work', {})
+      render :json => {}, :status => 200
+    end
+  end
+  
   def index
     if student_signed_in? # student
       @assessments = current_student.student_assignments.where(completed: false).joins(:assignment).where("assignments.category = ?", "Interactive Assessment" ).all || []
@@ -32,21 +47,6 @@ class QuizCenterController < ApplicationController
       render :json => response
     else
       render :text => "Forbidden", :status => '403'
-    end
-  end
-
-  def change_start_status
-    set_assignment
-    if @assignment.started == true
-      @assignment.update!(started: false)
-      # Alert Pusher (and students) to stop work
-      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'stop-work', {})
-      render :json => {}, :status => 200
-    else
-      @assignment.update!(started: true)
-      # Alert Pusher (and students) to start work
-      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'start-work', {})
-      render :json => {}, :status => 200
     end
   end
 
