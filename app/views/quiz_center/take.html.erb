@@ -11,9 +11,13 @@
     <h3>Toolbar:</h3>
     <hr>
     <div id="work-area-toolbar">
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignmentPromptModal">
-        Assignment information
-      </button>
+      <p>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignmentPromptModal">
+          Assignment information
+        </button>
+      </p>
+      <br>
+      <p>Last saved at: <span id="response-last-saved"></span></p>
     </div>
   </div>
 
@@ -41,7 +45,7 @@
           <input class="form-control update-student-assignment-response" id="student_assignment[response]" value="<%= sanitize(@assignment.response) %>" placeholder="" type="hidden" name="student_assignment[response]">
           <trix-editor class="trix-content" input="student_assignment[response]"></trix-editor>
         </div>
-        <%= button_tag "Submit", type:"submit", class: "btn btn-primary update-student-assignment-btn popup-submit" %>
+        <%= button_tag "Save", type:"submit", class: "btn btn-primary update-student-assignment-btn popup-submit" %>
       <% end %>
     </div>
 

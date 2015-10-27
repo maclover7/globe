@@ -6,24 +6,33 @@ studentAssignmentUpdateListener = function() {
     if (!$('.update-student-assignment-response').val()) {
       swal({ title: "Response field can't be blank", type: "warning" });
     } else {
-      sendStudentAssignment();
+      sendStudentAssignment({bot: false});
     }
   });
 };
 
-function sendStudentAssignment() {
+function sendStudentAssignment(data) {
   $.ajax({
     type: "POST",
     url: (window.location.href + '/response'),
     data: $('#update-student-assignment-form').serialize(),
     dataType: 'json',
     success: function() {
-      swal("Response saved successfully.", "", "success");
+      if (data.bot != true) {
+        swal("Response saved successfully.", "", "success");
+      }
+      updateLastSaved();
     },
     error: function() {
       swal("Oops...", "Something went wrong!", "error");
     }
   })
+}
+
+function updateLastSaved(){
+  lastSavedContainer = $("#response-last-saved");
+  date = jQuery.timeago(new Date());
+  lastSavedContainer.text(date);
 }
 
 $(document).ready(studentAssignmentUpdateListener);

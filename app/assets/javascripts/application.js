@@ -17,4 +17,5 @@
 //= require bootstrap-datepicker
 //= require sweetalert
 //= require trix
+//= require jquery.timeago
 //= require_tree .
