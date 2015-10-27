@@ -16,4 +16,5 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require sweetalert
+//= require trix
 //= require_tree .
