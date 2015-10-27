@@ -24,7 +24,11 @@ function sendStudentAssignment(data) {
       updateLastSaved();
     },
     error: function() {
-      swal("Oops...", "Something went wrong!", "error");
+      if (data.bot != true) {
+        swal("Oops...", "Something went wrong!", "error");
+      } else {
+        swal("Oops...", "While trying to autosave your work, something went wrong.", "error");
+      }
     }
   })
 }
