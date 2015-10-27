@@ -39,9 +39,13 @@ class QuizCenterController < ApplicationController
     set_assignment
     if @assignment.started == true
       @assignment.update!(started: false)
+      # Alert Pusher (and students) to stop work
+      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'stop-work', {})
       render :json => {}, :status => 200
     else
       @assignment.update!(started: true)
+      # Alert Pusher (and students) to start work
+      Pusher.trigger("assignment-#{ENV['RAILS_ENV'] || ENV['RACK_ENV']}-#{@assignment.id}", 'start-work', {})
       render :json => {}, :status => 200
     end
   end
