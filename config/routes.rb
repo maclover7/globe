@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   patch "/student_assignments/:id/complete" => "student_assignments#complete", as: :complete_student_assignment
 
   ## SIDEKIQ ADMIN
-  authenticate :user, lambda { |u| u.admin? } do
+  authenticate :user, lambda { |u| u.tech_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
