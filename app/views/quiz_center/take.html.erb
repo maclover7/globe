@@ -4,14 +4,21 @@
   <h1> <%= @assignment.assignment.name %> </h1>
 </div>
 
+<hr>
+
 <div class="row">
   <div class="col-md-4">
     <h3>Toolbar:</h3>
     <hr>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignmentPromptModal">
-      Assignment information
-    </button>
+    <div id="work-area-toolbar">
+      <p>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignmentPromptModal">
+          Assignment information
+        </button>
+      </p>
+      <br>
+      <p>Last saved at: <span id="response-last-saved"></span></p>
+    </div>
   </div>
 
   <div class="col-md-8">
@@ -31,8 +38,15 @@
       </div>
     </div>
 
-    <div id="work-area">
-      <p>text editor goes here...</p>
+    <div id="work-area-editor">
+      <%= form_tag assignments_path(@assignment), id: "update-student-assignment-form" do %>
+        <div class="form-group">
+          <%= label_tag "description" %><br>
+          <input class="form-control update-student-assignment-response" id="student_assignment[response]" value="<%= sanitize(@assignment.response) %>" placeholder="" type="hidden" name="student_assignment[response]">
+          <trix-editor class="trix-content" input="student_assignment[response]"></trix-editor>
+        </div>
+        <%= button_tag "Save", type:"submit", class: "btn btn-primary update-student-assignment-btn popup-submit" %>
+      <% end %>
     </div>
 
   </div>

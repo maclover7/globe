@@ -22,6 +22,7 @@ gem 'puma'
 gem 'pusher'
 gem 'sidekiq'
 gem 'sinatra'
+gem 'trix'
 
 # Rails Assets Dependencies
 source 'https://rails-assets.org' do

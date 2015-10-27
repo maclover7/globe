@@ -35,7 +35,12 @@
               </td>
               <td> <%= sa.assignment.course.name %> </td>
               <td> <%= sa.assignment.due_date.strftime("%A, %B %d") %> </td>
-              <td> <%= sa.assignment.description %> </td>
+              <td>
+                <%= render "dashboard/description_modal", sa: sa %>
+                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#descriptionModal-<%= sa.assignment.id %>">
+                  View description
+                </button>
+              </td>
             </tr>
           <% end %>
         </tbody>
