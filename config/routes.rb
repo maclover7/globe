@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   post '/pusher/auth' => "quiz_center#pusher_auth"
 
   ## SCHOOL ADMIN
+  resources :invite_codes
 
   ## TECH ADMIN
   authenticate :user, lambda { |u| u.tech_admin? } do

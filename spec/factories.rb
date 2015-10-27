@@ -18,6 +18,10 @@ FactoryGirl.define do
     student_id 1
   end
 
+  factory :invite_code do
+    code "MyString"
+  end
+
   factory :student, traits: [:user]
   factory :teacher, traits: [:user]
   factory :user, traits: [:user]
