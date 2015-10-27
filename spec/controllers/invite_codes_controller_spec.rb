@@ -71,18 +71,6 @@ RSpec.describe InviteCodesController, type: :controller do
         expect(response).to redirect_to(InviteCode.last)
       end
     end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved invite_code as @invite_code" do
-        post :create, invite_code: FactoryGirl.attributes_for(:invite_code, code: nil)
-        expect(assigns(:invite_code)).to be_a_new(InviteCode)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, invite_code: FactoryGirl.attributes_for(:invite_code, code: nil)
-        expect(response).to render_template("new")
-      end
-    end
   end
 
   describe "PUT #update" do
@@ -107,20 +95,6 @@ RSpec.describe InviteCodesController, type: :controller do
         invite_code = FactoryGirl.create(:invite_code)
         put :update, id: invite_code.id, invite_code: FactoryGirl.attributes_for(:invite_code, code: "hi")
         expect(response).to redirect_to(invite_code)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the invite_code as @invite_code" do
-        invite_code = FactoryGirl.create(:invite_code)
-        put :update, id: invite_code.id, invite_code: FactoryGirl.attributes_for(:invite_code, code: nil)
-        expect(assigns(:invite_code)).to eq(invite_code)
-      end
-
-      it "re-renders the 'edit' template" do
-        invite_code = FactoryGirl.create(:invite_code)
-        put :update, id: invite_code.id, invite_code: FactoryGirl.attributes_for(:invite_code, code: nil)
-        expect(response).to render_template("edit")
       end
     end
   end

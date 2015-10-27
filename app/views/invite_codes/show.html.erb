@@ -1,8 +1,16 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Code:</strong>
   <%= @invite_code.code %>
+</p>
+
+<p>
+  <strong>For school admins?:</strong>
+  <%= @invite_code.for_school_admins %>
+</p>
+
+<p>
+  <strong>For teachers?:</strong>
+  <%= @invite_code.for_teachers %>
 </p>
 
 <%= link_to 'Edit', edit_invite_code_path(@invite_code) %> |

@@ -1,6 +1,5 @@
 class InviteCode < ActiveRecord::Base
   before_save :generate_course_code
-  validates_presence_of :code
   validates_uniqueness_of :code
 
   private
