@@ -1,0 +1,51 @@
+<script>
+  window.onload = function(){
+    var notificationsChannel = pusher.subscribe("assignment-<%= ENV['RAILS_ENV'] || ENV['RACK_ENV'] %>-<%= @assignment.id %>");
+    var waitingArea = $("#waiting-area");
+    var workArea = $("#work-area");
+
+    // start-work event listener
+    notificationsChannel.bind('start-work', function(notification){
+      startWork();
+    });
+
+    // stop-work event listener
+    notificationsChannel.bind('stop-work', function(notification){
+      stopWork();
+    });
+
+    function startCountdown(){
+      $('#assignmentPromptModal').modal('show');
+      $('#assignmentPromptModalText').hide();
+      var seconds_left = 3;
+      var interval = setInterval(function() {
+        $('#assignmentPromptModalCountdown').show();
+        $("#assignmentPromptModalCountdownText").text(--seconds_left);
+
+        if (seconds_left <= 0){
+          alert("Start working!");
+          $('#assignmentPromptModalCountdown').hide();
+          $('#assignmentPromptModalText').show();
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
+
+    function startWork(){
+      waitingArea.hide();
+      startCountdown();
+      workArea.show();
+    }
+
+    function stopWork(){
+      workArea.hide();
+      waitingArea.show();
+    }
+
+    <% if @assignment.assignment.started? %>
+      startWork();
+    <% else %>
+      stopWork();
+    <% end %>
+  }
+</script>

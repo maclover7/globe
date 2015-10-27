@@ -13,6 +13,7 @@
 <div class="row">
   <div class="col-md-4">
     <div class="panel panel-default">
+      <h1 class="center">Participant Management:</h1>
       <div class="panel-heading">Participants (<span class="online-count">0</span> online)</div>
       <ul class="list-group">
         <% @students.each do |student| %>
@@ -24,48 +25,21 @@
       </ul>
     </div>
   </div>
+
+  <div class="col-md-8">
+    <h1 class="center">
+      Assignment Management:
+
+      <button class="btn btn-sm btn-default" data-assignment-id="<%= @assignment.id %>" id="start-assignment">
+        <% if @assignment.started %>
+          Stop Student Work
+        <% else %>
+          Start Student Work
+        <% end %>
+      </button>
+    </h1>
+
+  </div>
 </div>
 
-<script>
-  window.onload = function(){
-    // Initial setup
-    var allMembers;
-    allMembers = presenceChannel.members.each(function(member) {
-      add_member(member.id, member.info);
-    });
-
-    // Update status for new member
-    var newMember;
-    newMember = presenceChannel.bind('pusher:member_added', function(member) {
-      add_member(member.id, member.info);
-      update_count(presenceChannel.members.count);
-    });
-
-    // Update status for departing member
-    var removeMember;
-    removeMember = presenceChannel.bind('pusher:member_removed', function(member) {
-      remove_member(member.id, member.info);
-      update_count(presenceChannel.members.count);
-    });
-
-    // Change a member's status from offline to online
-    function add_member(id, info){
-      i = $("i").filter("[data-student-id='" + id + "']");
-      i.removeClass("offline");
-      i.addClass("online");
-    }
-
-    // Change a member's status from online to offline
-    function remove_member(id, info){
-      i = $("i").filter("[data-student-id='" + id + "']");
-      i.removeClass("online");
-      i.addClass("offline");
-    }
-
-    // Change count at the top of the page
-    function update_count(count){
-      real_count = count - 1;
-      $(".online-count").html("<span class='online-count'>" +  real_count + "</span>");
-    }
-  }
-</script>
+<%= render "quiz_center/pusher_teacher_notifier" %>

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   ## REALTIME QUIZ CENTER
   get '/quizcenter' => "quiz_center#index", as: :quiz_center
   get '/quizcenter/manage/:id' => "quiz_center#manage", as: :quiz_center_manage
+  post '/quizcenter/manage/:id/start' => "quiz_center#change_start_status"
   get '/quizcenter/take/:id' => "quiz_center#take", as: :quiz_center_take
   post '/pusher/auth' => "quiz_center#pusher_auth"
 end

@@ -1,1 +1,43 @@
 <%= render "quiz_center/presence_tracker" %>
+
+<div class="center">
+  <h1> <%= @assignment.assignment.name %> </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h3>Toolbar:</h3>
+    <hr>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#assignmentPromptModal">
+      Assignment information
+    </button>
+  </div>
+
+  <div class="col-md-8">
+
+    <div id="waiting-area">
+      <div class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <img class='media-object' src="/assets/owl.png" />
+          </div>
+          <div class="col-md-6">
+            <br />
+            <h2 class="media-heading">Assessment not started yet</h2>
+            <h4 class='text-muted'>Stand by... <i class="fa fa-circle-o-notch fa-spin"></i></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="work-area">
+      <p>text editor goes here...</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<%= render "quiz_center/pusher_student_notifier" %>
+<%= render "quiz_center/prompt_modal" %>

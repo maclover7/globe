@@ -84,9 +84,8 @@ RSpec.describe QuizCenterController, type: :controller do
       let(:teacher) { FactoryGirl.create(:teacher) }
       before do
         sign_in(teacher)
-        @course = FactoryGirl.create(:course)
-        @assignment = FactoryGirl.create(:assignment)
-        @student_assignment = FactoryGirl.create(:student_assignment)
+        @course = FactoryGirl.create(:course, teacher_id: teacher.id)
+        @assignment = FactoryGirl.create(:assignment, course_id: @course.id)
       end
 
       it "returns http 200" do
@@ -101,11 +100,59 @@ RSpec.describe QuizCenterController, type: :controller do
     end
   end
 
+  describe "POST #change_start_status" do
+    let(:teacher) { FactoryGirl.create(:teacher) }
+    before do
+      sign_in(teacher)
+      @course = FactoryGirl.create(:course)
+    end
+
+    context "started == false" do
+      before { @assignment = FactoryGirl.create(:assignment, started: false) }
+      it "updates started to equal true" do
+        post :change_start_status, id: @assignment.id
+        @assignment.reload
+        expect(@assignment.started).to eq(true)
+      end
+
+      it "returns http {}" do
+        post :change_start_status, id: @assignment.id
+        expect(response.body).to eq("{}")
+      end
+
+      it "returns http 200" do
+        post :change_start_status, id: @assignment.id
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context "started == true" do
+      before { @assignment = FactoryGirl.create(:assignment, started: true) }
+      it "updates started to equal false" do
+        post :change_start_status, id: @assignment.id
+        @assignment.reload
+        expect(@assignment.started).to eq(false)
+      end
+
+      it "returns http {}" do
+        post :change_start_status, id: @assignment.id
+        expect(response.body).to eq("{}")
+      end
+
+      it "returns http 200" do
+        post :change_start_status, id: @assignment.id
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
   describe "GET #take" do
     context "student" do
       let(:student) { FactoryGirl.create(:student) }
       before do
         sign_in(student)
+        @course = FactoryGirl.create(:course)
+        @enrollment = FactoryGirl.create(:enrollment)
         @assignment = FactoryGirl.create(:assignment)
         @student_assignment = FactoryGirl.create(:student_assignment)
       end
@@ -125,7 +172,8 @@ RSpec.describe QuizCenterController, type: :controller do
       let(:teacher) { FactoryGirl.create(:teacher) }
       before do
         sign_in(teacher)
-        @assignment = FactoryGirl.create(:assignment)
+        @course = FactoryGirl.create(:course, teacher_id: teacher.id)
+        @assignment = FactoryGirl.create(:assignment, course_id: @course.id)
         @student_assignment = FactoryGirl.create(:student_assignment)
       end
 

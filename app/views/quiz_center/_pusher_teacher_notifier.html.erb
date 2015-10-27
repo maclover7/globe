@@ -1,0 +1,43 @@
+<script>
+  window.onload = function(){
+    // Initial setup
+    presenceChannel.bind('pusher:subscription_succeeded', function(members) {
+      update_count(presenceChannel.members.count);
+      members.each(function(member) {
+        add_member(member.id);
+      });
+    });
+
+    // Update status for new member
+    presenceChannel.bind('pusher:member_added', function(member) {
+      add_member(member.id);
+      update_count(presenceChannel.members.count);
+    });
+
+    // Update status for departing member
+    presenceChannel.bind('pusher:member_removed', function(member) {
+      remove_member(member.id);
+      update_count(presenceChannel.members.count);
+    });
+
+    // Change a member's status from offline to online
+    function add_member(id){
+      i = $("i").filter("[data-student-id='" + id + "']");
+      i.removeClass("offline");
+      i.addClass("online");
+    }
+
+    // Change a member's status from online to offline
+    function remove_member(id){
+      i = $("i").filter("[data-student-id='" + id + "']");
+      i.removeClass("online");
+      i.addClass("offline");
+    }
+
+    // Change count at the top of the page
+    function update_count(count){
+      real_count = count - 1;
+      $(".online-count").html("<span class='online-count'>" +  real_count + "</span>");
+    }
+  }
+</script>
