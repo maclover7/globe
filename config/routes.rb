@@ -19,16 +19,19 @@ Rails.application.routes.draw do
   post '/enrollments' => 'enrollments#create', as: 'enrollments'
   patch "/student_assignments/:id/complete" => "student_assignments#complete", as: :complete_student_assignment
 
-  ## SIDEKIQ ADMIN
-  authenticate :user, lambda { |u| u.admin? } do
-    mount Sidekiq::Web => '/sidekiq'
-  end
-
-  ## REALTIME QUIZ CENTER
+  ## QUIZ CENTER
   get '/quizcenter' => "quiz_center#index", as: :quiz_center
   get '/quizcenter/manage/:id' => "quiz_center#manage", as: :quiz_center_manage
   post '/quizcenter/manage/:id/start' => "quiz_center#change_start_status"
   get '/quizcenter/take/:id' => "quiz_center#take", as: :quiz_center_take
   post '/quizcenter/take/:id/response' => 'quiz_center#update', as: :quiz_center_response
   post '/pusher/auth' => "quiz_center#pusher_auth"
+
+  ## SCHOOL ADMIN
+  resources :invite_codes
+
+  ## TECH ADMIN
+  authenticate :user, lambda { |u| u.tech_admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

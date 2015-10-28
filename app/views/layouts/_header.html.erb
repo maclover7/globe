@@ -20,10 +20,14 @@
         <% if user_signed_in? %>
           <%= render "layouts/courses" %>
           <li> <%= link_to "Quiz Center", quiz_center_path %> </li>
+
           <% if student_signed_in? %>
             <li> <%= link_to "Account Settings", edit_student_registration_path %> </li>
             <li> <%= link_to "Log out", destroy_user_session_path, method: :delete %> </li>
           <% elsif teacher_signed_in? %>
+            <% if current_teacher.school_admin == true %>
+              <li> <%= link_to "Invite Code Dashboard", invite_codes_path %> </li>
+            <% end %>
             <li> <%= link_to "Account Settings", edit_teacher_registration_path %> </li>
             <li> <%= link_to "Log out", destroy_user_session_path, method: :delete %> </li>
           <% end %>

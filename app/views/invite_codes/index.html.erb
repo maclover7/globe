@@ -1,0 +1,34 @@
+<div class="center">
+  <h1>Invite Code Dashboard</h1>
+  <p>You can use this dashboard to create invite codes for teachers, or other school admins.</p>
+  <p>The only purpose of a school admin is to create invite codes for teachers or other school admins.</p>
+</div>
+
+<h1>All Invite Codes</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>For school admins?</th>
+      <th>For teachers?</td>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invite_codes.each do |invite_code| %>
+      <tr>
+        <td><%= link_to invite_code.code, new_teacher_registration_path(invite_code: invite_code.code) %></td>
+        <td><%= invite_code.for_school_admins %></td>
+        <td><%= invite_code.for_teachers %></td>
+        <td><%= link_to 'Edit', edit_invite_code_path(invite_code) %></td>
+        <td><%= link_to 'Destroy', invite_code, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Invite code', new_invite_code_path %>
