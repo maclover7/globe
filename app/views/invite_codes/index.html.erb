@@ -19,7 +19,7 @@
   <tbody>
     <% @invite_codes.each do |invite_code| %>
       <tr>
-        <td><%= invite_code.code %></td>
+        <td><%= link_to invite_code.code, new_teacher_registration_path(invite_code: invite_code.code) %></td>
         <td><%= invite_code.for_school_admins %></td>
         <td><%= invite_code.for_teachers %></td>
         <td><%= link_to 'Edit', edit_invite_code_path(invite_code) %></td>
