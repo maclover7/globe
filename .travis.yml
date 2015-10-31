@@ -2,8 +2,10 @@ language: ruby
 rvm:
 - 2.2.3
 before_script:
+- cd rails
+- bundle install
 - bundle exec rake db:migrate RAILS_ENV=test
 script:
-  - cd rails && bundle exec rake
+  - bundle exec rake
 services:
 - redis-server
