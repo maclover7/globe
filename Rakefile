@@ -4,7 +4,7 @@ namespace :app do
   task :run do
     pids = [
       spawn("cd rails && foreman start"),
-      #spawn("cd frontend && ./node_modules/.bin/ember server --port=4900 --proxy-port=3900"),
+      spawn("cd ember && ember server --port=4200 --proxy-port=5000"),
     ]
 
     trap "INT" do
@@ -15,5 +15,10 @@ namespace :app do
     loop do
       sleep 1
     end
+  end
+
+  task :test do
+    system "cd ember && npm test"
+    system "cd rails && bundle exec rake"
   end
 end
