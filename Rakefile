@@ -2,13 +2,15 @@ require 'rake'
 
 namespace :app do
   task :run do
-    pids = [
-      spawn("cd rails && foreman start"),
-      spawn("cd ember && ember server --port=4200 --proxy-port=5000"),
-    ]
+    RAILS_PID = Process.spawn("cd rails && foreman start")
+    EMBER_PID = Process.spawn("cd ember && ./node_modules/.bin/ember serve --port=4200 --proxy=http://localhost:5000")
 
     trap "INT" do
-      Process.kill "INT", *pids
+      puts 'Terminating Rails process...'
+      Process.kill('SIGINT', RAILS_PID)
+      puts 'Terminating Ember process...'
+      Process.kill('SIGINT', EMBER_PID)
+      puts 'All processes terminated!'
       exit 0
     end
 
