@@ -13,6 +13,12 @@ FactoryGirl.define do
     teacher_id 1
   end
 
+  factory :course_notification do
+    body { Faker::Lorem.paragraph }
+    course_id 1
+    subject { Faker::Lorem.sentence }
+  end
+
   factory :enrollment do
     course_id 1
     student_id 1

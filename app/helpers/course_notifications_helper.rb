@@ -1,0 +1,2 @@
+module CourseNotificationsHelper
+end

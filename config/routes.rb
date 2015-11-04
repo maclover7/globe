@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   delete '/courses/:course_id/assignments/:assignment_id' => 'assignments#destroy', as: 'assignment'
   post '/enrollments' => 'enrollments#create', as: 'enrollments'
   patch "/student_assignments/:id/complete" => "student_assignments#complete", as: :complete_student_assignment
+  post '/courses/:course_id/course_notifications' => 'course_notifications#create', as: 'course_notifications'
 
   ## SIDEKIQ ADMIN
   authenticate :user, lambda { |u| u.admin? } do
