@@ -1,7 +1,23 @@
-language: ruby
-rvm:
-- 2.2.3
+language: node_js
+node_js:
+  - "0.12"
 before_script:
+# EMBER DEPENDENCIES
+- export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+- "npm config set spin false"
+- "npm install -g npm@^2"
+- npm install -g bower
+- cd ember
+- npm install
+- bower install
+# RAILS DEPENDENCIES
+- rvm install 2.2.3
+- cd "../rails"
+- bundle install
 - bundle exec rake db:migrate RAILS_ENV=test
+script:
+# ACTUALLY RUN THE TESTS
+- "cd ../"
+- rake app:test
 services:
 - redis-server
