@@ -1,6 +1,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  namespace :api do
+    devise_for :users, skip: :registrations
+    devise_for :students, :teachers, controllers: { registrations: "api/registrations" }, skip: :sessions
+  end
+
   scope '/api' do
     ## FRONTEND ROUTES
     root to: 'pages#home'

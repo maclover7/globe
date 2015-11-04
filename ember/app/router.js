@@ -7,7 +7,11 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('home', { path: '/' });
+  // User Authentication
   this.route('auth');
+  this.route('register-student', { path: '/register/students' });
+  this.route('register-teacher', { path: '/register/teachers' });
+  this.route('login');
 });
 
 export default Router;
