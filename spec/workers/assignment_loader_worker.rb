@@ -21,6 +21,7 @@ describe AssignmentLoaderWorker do
         }.to change(StudentAssignment, :count).by(1)
       end
     end
+
     context 'invalid assignment' do
        before do
         @assignment = FactoryGirl.create(:assignment, due_date: Date.yesterday)

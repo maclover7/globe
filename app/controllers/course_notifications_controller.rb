@@ -2,7 +2,7 @@ class CourseNotificationsController < ApplicationController
   def create
     @course_notification = CourseNotification.new(course_notification_params)
     if @course_notification.save
-      #AssignmentCreatorWorker.perform_async(@assignment.id)
+      CourseNotificationWorker.perform_async(@course_notification.id)
       render json: {}, status: 200
     end
   end
